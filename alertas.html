@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Orbis Sentinel — Central de alertas ativos de queimadas e desmatamento." />
+  <title>Orbis Sentinel — Alertas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/alertas.css" />
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Ir para o conteúdo principal</a>
+
+  <aside class="sidebar" aria-label="Painel de status do sistema">
+
+    <div class="sidebar__brand" aria-label="Logo Orbis Sentinel">
+      <div class="brand__icon" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+          <circle cx="20" cy="20" r="8" stroke="currentColor" stroke-width="1.5"/>
+          <ellipse cx="20" cy="20" rx="18" ry="7" stroke="currentColor" stroke-width="1" stroke-dasharray="3 2" opacity="0.5"/>
+          <circle cx="34" cy="13" r="2.5" fill="currentColor"/>
+          <line x1="31.5" y1="11" x2="29" y2="9" stroke="currentColor" stroke-width="1"/>
+          <line x1="34" y1="10.5" x2="34" y2="8" stroke="currentColor" stroke-width="1"/>
+          <circle cx="20" cy="20" r="2" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="brand__text">
+        <span class="brand__name">ORBIS</span>
+        <span class="brand__sub">SENTINEL</span>
+      </div>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Navegação principal">
+      <a href="index.html"      class="nav__item">
+        <span class="nav__icon" aria-hidden="true">⬡</span>
+        <span class="nav__label">Dashboard</span>
+      </a>
+      <a href="regioes.html"    class="nav__item">
+        <span class="nav__icon" aria-hidden="true">◈</span>
+        <span class="nav__label">Regiões</span>
+      </a>
+      <a href="alertas.html"    class="nav__item nav__item--active" aria-current="page">
+        <span class="nav__icon" aria-hidden="true">◉</span>
+        <span class="nav__label">Alertas</span>
+        <span class="nav__badge" aria-label="5 alertas ativos">5</span>
+      </a>
+      <a href="relatorios.html" class="nav__item">
+        <span class="nav__icon" aria-hidden="true">▦</span>
+        <span class="nav__label">Relatórios</span>
+      </a>
+    </nav>
+
+    <section class="sidebar__satellites" aria-label="Satélites ativos">
+      <h2 class="sidebar__section-title">Constelação</h2>
+      <ul class="satellite-list" role="list">
+        <li class="satellite-item satellite-item--online">
+          <span class="satellite-item__dot" aria-hidden="true"></span>
+          <span class="satellite-item__name">TERRA / MODIS</span>
+          <span class="satellite-item__status">ATIVO</span>
+        </li>
+        <li class="satellite-item satellite-item--online">
+          <span class="satellite-item__dot" aria-hidden="true"></span>
+          <span class="satellite-item__name">AQUA / MODIS</span>
+          <span class="satellite-item__status">ATIVO</span>
+        </li>
+        <li class="satellite-item satellite-item--online">
+          <span class="satellite-item__dot" aria-hidden="true"></span>
+          <span class="satellite-item__name">SUOMI-NPP</span>
+          <span class="satellite-item__status">ATIVO</span>
+        </li>
+        <li class="satellite-item satellite-item--standby">
+          <span class="satellite-item__dot" aria-hidden="true"></span>
+          <span class="satellite-item__name">SENTINEL-3A</span>
+          <span class="satellite-item__status">ESPERA</span>
+        </li>
+      </ul>
+    </section>
+
+    <div class="sidebar__sync">
+      <span class="sync__label">Última sync</span>
+      <time class="sync__time" id="last-sync" datetime="2026-06-01T08:00">08:00 UTC</time>
+    </div>
+
+    <button class="sidebar__toggle" id="nav-toggle" aria-expanded="false" aria-label="Abrir menu de navegação">
+      <span aria-hidden="true">☰</span>
+    </button>
+
+  </aside>
+
+  <main id="main-content" class="main">
+
+    <header class="topbar" role="banner">
+      <div class="topbar__left">
+        <h1 class="topbar__title">Central de Alertas</h1>
+        <p class="topbar__subtitle">Eventos ativos — ordenados por criticidade e horário</p>
+      </div>
+      <div class="topbar__right">
+        <div class="topbar__cycle" aria-live="polite">
+          <span class="cycle__dot" aria-hidden="true"></span>
+          <span class="cycle__label">Ciclo analítico ativo</span>
+        </div>
+        <time class="topbar__clock" id="clock" datetime="" aria-label="Hora atual">--:--:--</time>
+      </div>
+    </header>
+
+    <section class="kpi-strip" aria-labelledby="kpi-alertas-heading">
+      <h2 id="kpi-alertas-heading" class="visually-hidden">Indicadores de alertas ativos</h2>
+
+      <article class="kpi-card kpi-card--critical" aria-label="Alertas de nível crítico">
+        <span class="kpi-card__value" id="kpi-critico">3</span>
+        <span class="kpi-card__label">Nível Crítico</span>
+        <span class="kpi-card__delta kpi-card__delta--up">Ação imediata</span>
+      </article>
+
+      <article class="kpi-card kpi-card--alert" aria-label="Alertas de nível alerta">
+        <span class="kpi-card__value" id="kpi-alerta">2</span>
+        <span class="kpi-card__label">Nível Alerta</span>
+        <span class="kpi-card__delta kpi-card__delta--up">Monitorar de perto</span>
+      </article>
+
+      <article class="kpi-card kpi-card--total" aria-label="Tempo médio de resposta">
+        <span class="kpi-card__value">&lt;15m</span>
+        <span class="kpi-card__label">Tempo de Resposta</span>
+        <span class="kpi-card__delta kpi-card__delta--neutral">— meta do sistema</span>
+      </article>
+
+      <article class="kpi-card kpi-card--normal" aria-label="Alertas encerrados hoje">
+        <span class="kpi-card__value" id="kpi-encerrado">0</span>
+        <span class="kpi-card__label">Encerrados Hoje</span>
+        <span class="kpi-card__delta kpi-card__delta--neutral">— neste ciclo</span>
+      </article>
+    </section>
+
+    <div class="content-grid content-grid--alertas">
+
+      <section class="panel" aria-labelledby="criticos-heading">
+        <header class="panel__header">
+          <h2 id="criticos-heading" class="panel__title">Alertas Críticos</h2>
+          <span class="panel__count" aria-label="3 alertas críticos" id="count-critico">3</span>
+        </header>
+        <ul class="alertas-expandidos" id="lista-criticos" aria-label="Lista de alertas críticos" role="list">
+        </ul>
+      </section>
+
+      <section class="panel panel--alerts" aria-labelledby="alertas-heading">
+        <header class="panel__header">
+          <h2 id="alertas-heading" class="panel__title">Nível Alerta</h2>
+          <span class="panel__count" aria-label="2 alertas" id="count-alerta">2</span>
+        </header>
+        <ul class="alerts-list" id="lista-alertas" aria-label="Lista de alertas nível alerta" role="list">
+        </ul>
+      </section>
+
+    </div>
+
+    <section class="panel" aria-labelledby="log-heading">
+      <header class="panel__header">
+        <h2 id="log-heading" class="panel__title">Log do Ciclo Analítico</h2>
+        <button class="btn btn--simulate" id="btn-limpar-log" type="button" style="padding:4px 12px;font-size:.75rem;">
+          Limpar log
+        </button>
+      </header>
+      <div class="log-container" role="log" aria-live="polite" aria-label="Log de eventos do sistema">
+        <ol class="log-list" id="log-list" reversed>
+        </ol>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <span class="toast__icon" aria-hidden="true">⚠</span>
+    <span class="toast__message" id="toast-message">Notificação</span>
+  </div>
+  <script src="js/alertas.js"></script>
+</body>
+</html>

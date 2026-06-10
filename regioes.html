@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Orbis Sentinel — Mapa completo de regiões monitoradas por satélite." />
+  <title>Orbis Sentinel — Regiões</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <a href="#main-content" class="skip-link">Ir para o conteúdo principal</a>
+
+  <aside class="sidebar" aria-label="Painel de status do sistema">
+
+    <div class="sidebar__brand" aria-label="Logo Orbis Sentinel">
+      <div class="brand__icon" aria-hidden="true">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="40" height="40">
+          <circle cx="20" cy="20" r="8" stroke="currentColor" stroke-width="1.5"/>
+          <ellipse cx="20" cy="20" rx="18" ry="7" stroke="currentColor" stroke-width="1" stroke-dasharray="3 2" opacity="0.5"/>
+          <circle cx="34" cy="13" r="2.5" fill="currentColor"/>
+          <line x1="31.5" y1="11" x2="29" y2="9" stroke="currentColor" stroke-width="1"/>
+          <line x1="34" y1="10.5" x2="34" y2="8" stroke="currentColor" stroke-width="1"/>
+          <circle cx="20" cy="20" r="2" fill="currentColor"/>
+        </svg>
+      </div>
+      <div class="brand__text">
+        <span class="brand__name">ORBIS</span>
+        <span class="brand__sub">SENTINEL</span>
+      </div>
+    </div>
+
+    <nav class="sidebar__nav" aria-label="Navegação principal">
+      <a href="index.html"      class="nav__item">
+        <span class="nav__icon" aria-hidden="true">⬡</span>
+        <span class="nav__label">Dashboard</span>
+      </a>
+      <a href="regioes.html"    class="nav__item nav__item--active" aria-current="page">
+        <span class="nav__icon" aria-hidden="true">◈</span>
+        <span class="nav__label">Regiões</span>
+      </a>
+      <a href="alertas.html"    class="nav__item">
+        <span class="nav__icon" aria-hidden="true">◉</span>
+        <span class="nav__label">Alertas</span>
+        <span class="nav__badge" aria-label="5 alertas ativos">5</span>
+      </a>
+      <a href="relatorios.html" class="nav__item">
+        <span class="nav__icon" aria-hidden="true">▦</span>
+        <span class="nav__label">Relatórios</span>
+      </a>
+    </nav>
+
+    <section class="sidebar__satellites" aria-label="Satélites ativos em monitoramento">
+      <h2 class="sidebar__section-title">Constelação</h2>
+      <ul class="satellite-list" role="list">
+        <li class="satellite-item satellite-item--online">
+          <span class="satellite-item__dot" aria-hidden="true"></span>
+          <span class="satellite-item__name">TERRA / MODIS</span>
+          <span class="satellite-item__status">ATIVO</span>
+        </li>
+        <li class="satellite-item satellite-item--online">
+          <span class="satellite-item__dot" aria-hidden="true"></span>
+          <span class="satellite-item__name">AQUA / MODIS</span>
+          <span class="satellite-item__status">ATIVO</span>
+        </li>
+        <li class="satellite-item satellite-item--online">
+          <span class="satellite-item__dot" aria-hidden="true"></span>
+          <span class="satellite-item__name">SUOMI-NPP</span>
+          <span class="satellite-item__status">ATIVO</span>
+        </li>
+        <li class="satellite-item satellite-item--standby">
+          <span class="satellite-item__dot" aria-hidden="true"></span>
+          <span class="satellite-item__name">SENTINEL-3A</span>
+          <span class="satellite-item__status">ESPERA</span>
+        </li>
+      </ul>
+    </section>
+
+    <div class="sidebar__sync">
+      <span class="sync__label">Última sync</span>
+      <time class="sync__time" id="last-sync" datetime="2026-06-01T08:00">08:00 UTC</time>
+    </div>
+
+    <button class="sidebar__toggle" id="nav-toggle" aria-expanded="false" aria-label="Abrir menu de navegação">
+      <span aria-hidden="true">☰</span>
+    </button>
+
+  </aside>
+
+  <main id="main-content" class="main">
+
+    <header class="topbar" role="banner">
+      <div class="topbar__left">
+        <h1 class="topbar__title">Regiões Monitoradas</h1>
+        <p class="topbar__subtitle">Cobertura orbital completa — 9 biomas ativos</p>
+      </div>
+      <div class="topbar__right">
+        <div class="topbar__cycle" aria-live="polite" aria-label="Status do ciclo analítico">
+          <span class="cycle__dot" aria-hidden="true"></span>
+          <span class="cycle__label">Ciclo analítico ativo</span>
+        </div>
+        <time class="topbar__clock" id="clock" datetime="" aria-label="Hora atual">--:--:--</time>
+      </div>
+    </header>
+
+    <section class="kpi-strip" aria-labelledby="kpi-heading-regioes">
+      <h2 id="kpi-heading-regioes" class="visually-hidden">Indicadores de cobertura por bioma</h2>
+
+      <article class="kpi-card kpi-card--critical" aria-label="Total de regiões monitoradas">
+        <span class="kpi-card__value" id="kpi-regions">9</span>
+        <span class="kpi-card__label">Regiões Ativas</span>
+        <span class="kpi-card__delta kpi-card__delta--neutral">— todas online</span>
+      </article>
+
+      <article class="kpi-card kpi-card--total" aria-label="Área total monitorada em km²">
+        <span class="kpi-card__value" id="kpi-area">31k</span>
+        <span class="kpi-card__label">km² Cobertos</span>
+        <span class="kpi-card__delta kpi-card__delta--neutral">— via MODIS</span>
+      </article>
+
+      <article class="kpi-card kpi-card--alert" aria-label="Biomas em risco elevado">
+        <span class="kpi-card__value" id="kpi-risks">4</span>
+        <span class="kpi-card__label">Biomas em Risco</span>
+        <span class="kpi-card__delta kpi-card__delta--up">+1 vs semana passada</span>
+      </article>
+
+      <article class="kpi-card kpi-card--normal" aria-label="Frequência de varredura orbital">
+        <span class="kpi-card__value" id="kpi-sync-interval">30m</span>
+        <span class="kpi-card__label">Intervalo de Sync</span>
+        <span class="kpi-card__delta kpi-card__delta--neutral">— NASA FIRMS</span>
+      </article>
+    </section>
+
+    <section class="panel panel--regions" aria-labelledby="regioes-heading">
+      <header class="panel__header">
+        <h2 id="regioes-heading" class="region_details">Detalhamento por Região</h2>
+        <div class="panel__controls">
+          <label for="filter-bioma" class="visually-hidden">Filtrar por bioma</label>
+          <select id="filter-bioma" class="panel__filter" aria-label="Filtrar por bioma">
+            <option value="todos">Todos os biomas</option>
+            <option value="Amazonia">Amazônia</option>
+            <option value="Cerrado">Cerrado</option>
+            <option value="Pantanal">Pantanal</option>
+            <option value="Caatinga">Caatinga</option>
+            <option value="MataAtlantica">Mata Atlântica</option>
+            <option value="Pampa">Pampa</option>
+          </select>
+        </div>
+      </header>
+
+      <div class="table-wrapper" role="region" aria-label="Tabela detalhada de regiões" tabindex="0">
+        <table class="regions-table" id="regioes-table" aria-describedby="table-description">
+          <thead>
+            <tr>
+              <th scope="col">Nível</th>
+              <th scope="col">Região</th>
+              <th scope="col">Bioma</th>
+              <th scope="col">Estado</th>
+              <th scope="col" class="col--numeric">Área km²</th>
+              <th scope="col" class="col--numeric">Focos</th>
+              <th scope="col" class="col--numeric">NDVI</th>
+              <th scope="col" class="col--numeric">Umidade</th>
+              <th scope="col">Tendência</th>
+            </tr>
+          </thead>
+          <tbody id="regioes-tbody">
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="sensor-strip" aria-labelledby="biomas-heading">
+      <h2 id="biomas-heading" class="panel__title panel__title--strip">Status por Bioma</h2>
+      <div class="sensor-grid" id="biomas-grid">
+      </div>
+    </section>
+
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <span class="toast__icon" aria-hidden="true">⚠</span>
+    <span class="toast__message" id="toast-message">Notificação</span>
+  </div>
+  <script src="js/regioes.js"></script>
+</body>
+</html>
